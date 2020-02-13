@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/socket.io.js"></script>
+    
+</head>
+<body>
+    <form onsubmit = "return sendMessage();">
+        <input type="text" name="msg" id="message" placeholder="Enter Message" />
+        <input type="submit" value="Send">
+    </form>
+
+    <ul id="messages"></ul>
+    <script>
+        const server = "http://localhost:8080";
+        var io = io(server); 
+
+        function sendMessage() {
+
+            var message = document.getElementById("message"); //get message
+
+            io.emit("new message", message.value); //sending message to the server from client
+
+            return false; //this is to prevent the form from submitting 
+        }
+
+        $.ajax({
+            url: server + "/get_messages",
+            method: "GET",
+            success: function(response) { 
+                console.log(response);
+
+                //parse JSON to JS object and putting them into html document
+                var unorderedList = document.getElementById("messages");
+                var data = JSON.parse(response);
+                // var data = response;
+                console.log(response);
+                
+                for(var a=0; a<data.length; a++) {
+
+                    // displaying messages
+                    var li = document.createElement("li");
+                    li.innerHTML = data[a].message;
+                    unorderedList.appendChild(li);
+                }
+            },
+            timeout: 6000
+        }); 
+
+        //  io.emit("new message", "Hello Server!"); //sending message from client to server
+
+        io.on("new message", (data) => {
+            console.log("Client Recieves & Server Says ", data);
+
+            //display messages
+            var li = document.createElement("li");
+            li.innerHTML = data;
+
+            var messages = document.getElementById("messages");
+            messages.appendChild(li);
+        }); // Recieving messages from server
+
+    </script>
+</body>
+</html>
