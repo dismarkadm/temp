@@ -11,14 +11,23 @@ const STATUS_PASS = 'success';
 
 const msg = fs.readFileSync(COMMIT_MSG_FILE, 'utf-8').trim();
 const match = PATTERN.exec(msg);
-if(match) {
-  try {
-    execSync(`git commit -m ${msg}`, { stdio: [0, 1, 2] });
-    process.emit('exit', STATUS_PASS);
-  } catch(e) {
+console.log(msg);
+console.log(match);
+
+
+process.argv[2] ?  check(): null;
+
+function check() {
+  if(match) {
+    try {
+      execSync(`git commit -m ${msg}`, { stdio: [0, 1, 2] });
+      process.emit('exit', STATUS_PASS);
+    } catch(e) {
+      process.emit('exit', STATUS_FAIL);
+    }
+  }else {
+    console.log(chalk.red.inverse('Invalid Commit'));
     process.emit('exit', STATUS_FAIL);
   }
-}else {
-  console.log(chalk.red.inverse('Invalid Commit'));
-  process.emit('exit', STATUS_FAIL);
 }
+
