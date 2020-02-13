@@ -15,7 +15,7 @@ console.log(msg);
 console.log(match);
 
 
-process.argv[2] ?  check(): null;
+process.argv[2] ?  check(): check();
 
 function check() {
   console.log(chalk.greenBright('Inside Checker'));
