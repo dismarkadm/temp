@@ -18,9 +18,11 @@ console.log(match);
 process.argv[2] ?  check(): null;
 
 function check() {
+  console.log(chalk.greenBright('Inside Checker'));
   if(match !== null) {
     try {
       execSync(`git commit -m ${msg}`, { stdio: [0, 1, 2] });
+      fs.writeFileSync(COMMIT_MSG_FILE, 'dadsad', 'utf8');
       process.emit('exit', STATUS_PASS);
     } catch(e) {
       process.emit('exit', STATUS_FAIL);
@@ -30,4 +32,3 @@ function check() {
     process.emit('exit', STATUS_FAIL);
   }
 }
-
