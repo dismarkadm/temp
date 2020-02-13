@@ -22,7 +22,7 @@ function check() {
   if(match !== null) {
     try {
       execSync(`git commit -m ${msg}`, { stdio: [0, 1, 2] });
-      fs.writeFileSync(COMMIT_MSG_FILE, 'dadsad', 'utf8');
+      // fs.writeFileSync(COMMIT_MSG_FILE, 'dadsad', 'utf8');
       process.emit('exit', STATUS_PASS);
     } catch(e) {
       process.emit('exit', STATUS_FAIL);
