@@ -9,7 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "node commit-msg"
+      "pre-commit": "node commit-msg"
     }
   },
   "author": "",
