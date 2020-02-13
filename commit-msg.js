@@ -18,7 +18,7 @@ console.log(match);
 process.argv[2] ?  check(): null;
 
 function check() {
-  if(match) {
+  if(match !== null) {
     try {
       execSync(`git commit -m ${msg}`, { stdio: [0, 1, 2] });
       process.emit('exit', STATUS_PASS);
