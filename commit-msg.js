@@ -17,9 +17,5 @@ if(match) {
   }
 }else {
   console.log(chalk.red.inverse('Invalid Commit'));
-  try {
-    showMenu();
-  } catch(e) {
     process.emit('exit', 1);
-  }
 }
